@@ -2,6 +2,8 @@ const { Router } = require("express");
 
 const indexRouter = Router();
 
+const users = [{ email: "abc@foo.com" }];
+
 app.get("/articles", (req, res) => {
   const articles = [];
   // code to retrieve an article...
@@ -13,6 +15,15 @@ app.get("/articles/:articlesId/comments", (req, res) => {
   const comments = [];
   //code to get comments by articlesId
   res.json(comments);
+});
+
+app.post("/users", (req, res) => {
+  const { email } = req.body;
+  const userExists = users.find((u) => u.email === email);
+  if (userExists) {
+    return res.status(400).json({ error: "User already exists" });
+  }
+  res.json(req.body);
 });
 
 app.post("/articles", (req, res) => {
