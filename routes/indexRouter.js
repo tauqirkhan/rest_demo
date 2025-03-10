@@ -8,6 +8,13 @@ app.get("/articles", (req, res) => {
   res.json(articles);
 });
 
+app.get("/articles/:articlesId/comments", (req, res) => {
+  const { articlesId } = req.params;
+  const comments = [];
+  //code to get comments by articlesId
+  res.json(comments);
+});
+
 app.post("/articles", (req, res) => {
   // code to add a new article...
   res.json(req.body);
