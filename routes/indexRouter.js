@@ -27,6 +27,18 @@ indexRouter.get("/articles/:articlesId/comments", (req, res) => {
 //for filtering query = employees?lastName=Smith&age=30
 //for sorting query = employees?sort=+age,-firstName (asc age & desc firstName)
 
+app.get("/v1/employees", (req, res) => {
+  const employees = [];
+  // code to get employees
+  res.json(employees);
+});
+
+app.get("/v2/employees", (req, res) => {
+  const employees = [];
+  // different code to get employees
+  res.json(employees);
+});
+
 indexRouter.get("/employees", (req, res) => {
   const { firstName, lastName, age } = req.query;
   let results = [...employees];
