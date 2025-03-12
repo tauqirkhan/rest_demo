@@ -4,6 +4,13 @@ const indexRouter = Router();
 
 const users = [{ email: "abc@foo.com" }];
 
+const employees = [
+  { firstName: "Jane", lastName: "Smith", age: 20 },
+  //...
+  { firstName: "John", lastName: "Smith", age: 30 },
+  { firstName: "Mary", lastName: "Green", age: 50 },
+];
+
 indexRouter.get("/articles", (req, res) => {
   const articles = [];
   // code to retrieve an article...
@@ -15,6 +22,24 @@ indexRouter.get("/articles/:articlesId/comments", (req, res) => {
   const comments = [];
   //code to get comments by articlesId
   res.json(comments);
+});
+
+//for filtering query = employees?lastName=Smith&age=30
+//for sorting query = employees?sort=+age,-firstName (asc age & desc firstName)
+
+indexRouter.get("/employees", (req, res) => {
+  const { firstName, lastName, age } = req.query;
+  let results = [...employees];
+  if (firstName) {
+    results = results.filter((r) => r.firstName === firstName);
+  }
+  if (lastName) {
+    results = results.filter((r) => r.lastName === lastName);
+  }
+  if (age) {
+    results = results.filter((r) => +r.age === +age);
+  }
+  res.json(results);
 });
 
 indexRouter.post("/users", (req, res) => {
