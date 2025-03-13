@@ -11,6 +11,26 @@ const employees = [
   { firstName: "Mary", lastName: "Green", age: 50 },
 ];
 
+//curl http://localhost:3000 or curl -X GET http://localhost:3000
+indexRouter.get("/", (req, res) => {
+  return res.send("Received a GET HTTP method");
+});
+
+//curl -X POST http://localhost:3000
+indexRouter.post("/", (req, res) => {
+  return res.send("Received a POST HTTP method");
+});
+
+//curl -X PUT http://localhost:3000
+indexRouter.put("/", (req, res) => {
+  return res.send("Received a PUT HTTP method");
+});
+
+//curl -X DELETE http://localhost:3000
+indexRouter.delete("/", (req, res) => {
+  return res.send("Received a DELETE HTTP method");
+});
+
 indexRouter.get("/articles", (req, res) => {
   const articles = [];
   // code to retrieve an article...
@@ -27,13 +47,13 @@ indexRouter.get("/articles/:articlesId/comments", (req, res) => {
 //for filtering query = employees?lastName=Smith&age=30
 //for sorting query = employees?sort=+age,-firstName (asc age & desc firstName)
 
-app.get("/v1/employees", (req, res) => {
+indexRouter.get("/v1/employees", (req, res) => {
   const employees = [];
   // code to get employees
   res.json(employees);
 });
 
-app.get("/v2/employees", (req, res) => {
+indexRouter.get("/v2/employees", (req, res) => {
   const employees = [];
   // different code to get employees
   res.json(employees);
