@@ -1,38 +1,8 @@
 const { Router } = require("express");
 const uuidv4 = require("uuid").v4;
+const { users, messages, employees } = require("../models/index");
 
 const indexRouter = Router();
-
-const employees = [
-  { firstName: "Jane", lastName: "Smith", age: 20 },
-  //...
-  { firstName: "John", lastName: "Smith", age: 30 },
-  { firstName: "Mary", lastName: "Green", age: 50 },
-];
-
-let users = {
-  1: {
-    id: "1",
-    username: "Robin Wieruch",
-  },
-  2: {
-    id: "2",
-    username: "Dave Davids",
-  },
-};
-
-let messages = {
-  1: {
-    id: "1",
-    text: "Hello World",
-    userId: "1",
-  },
-  2: {
-    id: "2",
-    text: "By World",
-    userId: "2",
-  },
-};
 
 indexRouter.use((req, res, next) => {
   req.me = users[1];
