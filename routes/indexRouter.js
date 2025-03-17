@@ -1,8 +1,19 @@
 const { Router } = require("express");
 const uuidv4 = require("uuid").v4;
 const { users, messages, employees } = require("../models/index");
+const verifyToken = require("./utils/verifyToken");
 
 const indexRouter = Router();
+const jwt = require("jsonwebtoken");
+
+//store this in .env file
+const secretKey = "secretKeyYouWantString";
+
+indexRouter.get("/api", (req, res) => {
+  res.json({
+    message: "Welcome to the API",
+  });
+});
 
 indexRouter.use((req, res, next) => {
   req.me = users[1];
@@ -36,6 +47,34 @@ indexRouter.post("/messages", (req, res) => {
   messages[id] = message;
 
   return res.send(message);
+});
+
+indexRouter.post("/api/posts", verifyToken, (req, res) => {
+  jwt.verify(req.token, secretKey, (err, authData) => {
+    if (err) {
+      res.sendStatus(403);
+    } else {
+      res.json({
+        message: "Post created...",
+        authData,
+      });
+    }
+  });
+});
+
+indexRouter.post("/api/login", (req, res) => {
+  //mock user
+  const user = {
+    id: 1,
+    username: "tk",
+    email: "tk@test.io",
+  };
+
+  jwt.sign({ user }, secretKey, { expiresIn: "1h" }, (err, token) => {
+    res.json({
+      token,
+    });
+  });
 });
 
 //curl -X POST http://localhost:3000
